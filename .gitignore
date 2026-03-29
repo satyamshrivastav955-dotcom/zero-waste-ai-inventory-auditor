@@ -1,0 +1,26 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Database
+backend/inventory.db
+
+# Logs
+logs/actions.log
+logs/debug.log
+*.log
+
+# Misc
+.DS_Store
+*.pkl

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero-Waste Core | Absolute Pinnacle</title>
+    <script src="chart.min.js"></script>
+    <style>
+        /* =========================================================
+           THE PINNACLE: LIVING NEURAL INTERFACE
+           ========================================================= */
+
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;700&family=Space+Grotesk:wght@300;400;600&family=JetBrains+Mono:wght@100;400;700&display=swap');
+
+        :root {
+            --base-bg: #010103;
+            --surface-1: rgba(10, 11, 16, 0.4);
+            --surface-2: rgba(20, 22, 30, 0.6);
+            --surface-hover: rgba(30, 33, 48, 0.8);
+            
+            --text-1: #ffffff;
+            --text-2: #8a8f98;
+            --text-3: #525660;
+
+            --accent: #5e6ad2;
+            --cyan: #00e5ff;
+            --gold: #ffb800;
+            --rose: #ff2a5f;
+
+            --border-sheen: rgba(255, 255, 255, 0.04);
+            --border-strong: rgba(255, 255, 255, 0.1);
+
+            --blur-heavy: blur(40px);
+            --curve-spring: cubic-bezier(0.175, 0.885, 0.32, 1.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--base-bg);
+            color: var(--text-1);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            perspective: 1200px;
+        }
+
+        /* LIVING BACKGROUND CANVAS */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* --- RADIAL VIGNETTE OVERLAY --- */
+        .vignette {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 30%, var(--base-bg) 100%);
+            z-index: 1; pointer-events: none;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(90deg, rgba(3,4,7,0.8) 0%, rgba(10,11,16,0.1) 100%);
+            backdrop-filter: var(--blur-heavy);
+            border-right: 1px solid var(--border-sheen);
+            display: flex;
+            flex-direction: column;
+            padding: 48px 32px;
+            z-index: 100;
+        }
+
+        .brand-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-1);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .brand-logo::after {
+            content: ''; position: absolute; left: 0; bottom: -12px;
+            width: 30px; height: 2px; background: var(--cyan);
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        .nav { display: flex; flex-direction: column; gap: 12px; }
+
+        .nav-item {
+            padding: 18px 20px;
+            border-radius: 16px;
+            color: var(--text-2);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex; align-items: center;
+        }
+
+        .nav-item::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.1), transparent);
+            transition: width 0.6s var(--curve-spring);
+            z-index: -1;
+        }
+
+        .nav-item::after {
+            content: ''; width: 4px; height: 4px; border-radius: 50%;
+            background: var(--text-3); margin-right: 16px; position: absolute; left: 20px;
+            transition: 0.4s;
+        }
+
+        .nav-item { padding-left: 40px; }
+        
+        .nav-item:hover { color: var(--text-1); transform: translateX(8px); }
+        .nav-item:hover::after { background: var(--text-1); box-shadow: 0 0 8px #fff; }
+
+        .nav-item.active { color: var(--cyan); text-shadow: 0 0 16px rgba(0,229,255,0.4); }
+        .nav-item.active::before { width: 100%; border-left: 3px solid var(--cyan); }
+        .nav-item.active::after { background: var(--cyan); box-shadow: 0 0 12px var(--cyan); transform: scale(1.5);}
+
+        /* UPLINK HOLOGRAM */
+        .hardware-uplink {
+            margin-top: auto; padding: 24px; border-radius: 20px;
+            background: rgba(10,11,16,0.4); border: 1px solid var(--border-sheen);
+            position: relative; overflow: hidden;
+        }
+        .hardware-uplink::before {
+            content: ''; position: absolute; top:0; left:-100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+            animation: holo-sweep 4s infinite linear;
+        }
+        @keyframes holo-sweep { 100% { left: 200%; } }
+
+        /* --- MAIN CONTENT --- */
+        .workspace { flex: 1; display: flex; flex-direction: column; position: relative; z-index: 10; }
+
+        .top-navbar {
+            padding: 40px 64px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            background: linear-gradient(180deg, rgba(3,4,7,0.6) 0%, transparent 100%);
+        }
+
+        .view-title { font-size: 2.2rem; font-weight: 300; letter-spacing: -0.02em; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+
+        .magic-btn {
+            background: transparent; border: 1px solid rgba(0,e5,ff,0.3);
+            color: var(--cyan); padding: 14px 32px; border-radius: 100px;
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+            cursor: pointer; transition: all 0.5s var(--curve-spring);
+            position: relative; overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,229,255,0.05);
+        }
+        .magic-btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 30px rgba(0,229,255,0.4); transform: translateY(-3px); }
+
+        .view { display: none; flex: 1; padding: 48px 64px; overflow-y: auto; overflow-x: hidden; }
+        .view.active { display: block; animation: view-boot 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes view-boot { 0% { opacity: 0; transform: scale(0.97) translateY(20px); filter: blur(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } }
+
+        /* --- 3D TILT HUD CARDS --- */
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; perspective: 1000px; }
+
+        .hud-card {
+            background: linear-gradient(145deg, rgba(20,22,30,0.4), rgba(10,11,16,0.8));
+            border: 1px solid var(--border-sheen); border-radius: 24px; padding: 36px;
+            backdrop-filter: var(--blur-heavy);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out; /* JavaScript handles the physical tilt */
+            position: relative;
+        }
+        .hud-card::after {
+            content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; pointer-events: none;
+        }
+
+        /* Ambient Glow per card */
+        .hud-card.c-cyan { box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 0 40px rgba(0,229,255,0.02); border-top: 1px solid rgba(0,229,255,0.2); }
+        .hud-card.c-gold { box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 0 40px rgba(255,184,0,0.02); border-top: 1px solid rgba(255,184,0,0.2); }
+        .hud-card.c-rose { box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 0 40px rgba(255,42,95,0.02); border-top: 1px solid rgba(255,42,95,0.2); }
+
+        .hud-card:hover { z-index: 10; cursor: crosshair;}
+
+        .hud-label { font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--text-2); letter-spacing: 0.2em; text-transform: uppercase; transform: translateZ(20px); }
+        .hud-value { font-family: 'JetBrains Mono', monospace; font-size: 4rem; font-weight: 100; margin-top: 20px; color: var(--text-1); letter-spacing: -0.05em; transform: translateZ(40px); text-shadow: 0 8px 16px rgba(0,0,0,0.5);}
+
+        .color-cyan { background: linear-gradient(135deg, #fff, var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .color-gold { background: linear-gradient(135deg, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .color-rose { background: linear-gradient(135deg, #fff, var(--rose)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- IMMERSIVE GLASS PANELS --- */
+        .glass-panel {
+            background: linear-gradient(180deg, rgba(20,22,30,0.3) 0%, rgba(10,11,16,0.6) 100%);
+            border: 1px solid var(--border-sheen); border-radius: 24px; padding: 48px;
+            backdrop-filter: blur(20px); margin-bottom: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .glass-panel-header { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-1); margin-bottom: 40px; display: flex; align-items: center; }
+        .glass-panel-header::before { content: ''; width: 24px; height: 1px; background: var(--text-3); margin-right: 16px; }
+
+        /* --- THE TABLES --- */
+        .data-table-wrapper { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        th { text-align: left; padding: 24px; font-size: 0.65rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.2em; border-bottom: 1px solid var(--border-strong); font-family: 'Space Grotesk', sans-serif; }
+        td { padding: 24px; font-size: 0.95rem; font-weight: 400; color: var(--text-1); border-bottom: 1px solid rgba(255,255,255,0.02); vertical-align: middle; transition: 0.3s; }
+        
+        tbody tr { transition: 0.4s; }
+        tbody tr:hover { transform: scale(1.01); background: rgba(255,255,255,0.02); box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 10; position: relative;}
+        
+        .sku-code { font-family: 'JetBrains Mono', monospace; color: var(--text-2); background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem;}
+        .mono-val { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 400;}
+
+        /* Generative Glowing Progress Bar */
+        .prog-container { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; margin-top: 14px; position:relative;}
+        .prog-bar { height: 100%; border-radius: 4px; transition: width 1.5s var(--curve-spring); position:relative; overflow:hidden;}
+        .prog-bar::after { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); animation: sweep 2s infinite linear;}
+
+        .status-pill { display: inline-flex; align-items: center; padding: 6px 16px; border-radius: 100px; font-size: 0.65rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.15em; text-transform: uppercase; }
+        .status-pill.safe { color: var(--cyan); background: rgba(0,229,255,0.05); border: 1px solid rgba(0,229,255,0.2); box-shadow: inset 0 0 10px rgba(0,229,255,0.1); }
+        .status-pill.warn { color: var(--gold); background: rgba(255,184,0,0.05); border: 1px solid rgba(255,184,0,0.2); box-shadow: inset 0 0 10px rgba(255,184,0,0.1); }
+        .status-pill.crit { color: var(--rose); background: rgba(255,42,95,0.05); border: 1px solid rgba(255,42,95,0.2); box-shadow: inset 0 0 10px rgba(255,42,95,0.1); }
+
+        /* --- SENSOR MESH GRID --- */
+        .mesh-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+        .mesh-node {
+            background: rgba(0,0,0,0.2); border: 1px solid var(--border-sheen); border-radius: 20px; padding: 40px; position: relative;
+            overflow: hidden;
+        }
+        .mesh-node::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--text-3); transition: 0.4s; }
+        .mesh-node:hover::before { background: var(--cyan); box-shadow: 0 0 20px var(--cyan); }
+        .mesh-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-2); letter-spacing: 0.2em; margin-bottom: 24px; display:flex; justify-content:space-between; align-items:center;}
+        .mesh-data { font-family: 'JetBrains Mono', monospace; font-size: 3rem; font-weight: 100; margin: 16px 0; }
+        
+        /* Pulse Animation inside node */
+        .ping-circle { width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+        @keyframes ping { 75%, 100% { transform: scale(2.5); opacity: 0; } }
+
+        .chart-wrapper { height: 420px; width: 100%; position: relative; margin-top: 32px; }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Neural Network Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="vignette"></div>
+
+    <aside class="sidebar">
+        <div class="brand-logo">Project Core</div>
+        <nav class="nav">
+            <div class="nav-item active" onclick="switchView('overview')">Global Topology</div>
+            <div class="nav-item" onclick="switchView('inventory')">Asset Neural Matrix</div>
+            <div class="nav-item" onclick="switchView('sensors')">Hardware Telemetry</div>
+            <div class="nav-item" onclick="switchView('logs')">Immutable Ledger</div>
+        </nav>
+        
+        <div class="hardware-uplink">
+            <div style="font-family:'JetBrains Mono'; font-size:0.7rem; color:var(--text-3); margin-bottom:12px;">SYSTEM_STATUS</div>
+            <div style="font-family:'Space Grotesk'; font-size:1.2rem; font-weight:600; color:var(--cyan); text-shadow:0 0 10px var(--cyan); margin-bottom:16px;">UPLINK SECURE</div>
+            <div style="font-family:'JetBrains Mono'; font-size:0.75rem; color:var(--text-2); display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.05); padding-top:12px;">
+                <span>SYNC_HASH:</span> <span id="sync-hash" style="color:var(--text-1)">0x0000</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="workspace">
+        <header class="top-navbar">
+            <h1 class="view-title" id="page-title">Global Topology</h1>
+            <button class="magic-btn" onclick="forceRecalculate()">Initialize Inference</button>
+        </header>
+
+        <section id="view-overview" class="view active">
+            <div class="grid-4">
+                <div class="hud-card c-cyan tilt-fx">
+                    <div class="hud-label">Monitored Assets</div>
+                    <div class="hud-value color-cyan count-up" id="kpi-total">0</div>
+                </div>
+                <div class="hud-card c-gold tilt-fx">
+                    <div class="hud-label">Risk Vectors</div>
+                    <div class="hud-value color-gold count-up" id="kpi-risk">0</div>
+                </div>
+                <div class="hud-card c-rose tilt-fx">
+                    <div class="hud-label">Critical Decay</div>
+                    <div class="hud-value color-rose count-up" id="kpi-crit">0</div>
+                </div>
+                <div class="hud-card c-cyan tilt-fx">
+                    <div class="hud-label">Structural Mean Temp</div>
+                    <div class="hud-value color-cyan"><span id="kpi-temp" class="count-up">0.0</span><span style="font-size:1.5rem; color:var(--text-3); margin-left:8px;">°C</span></div>
+                </div>
+            </div>
+
+            <div class="glass-panel">
+                <div class="glass-panel-header">Real-Time Sensor Mesh Output</div>
+                <div class="mesh-grid">
+                    <div class="mesh-node">
+                        <div class="mesh-title"><span>NODE_001 [LOCAL_DHT]</span><div class="ping-circle"></div></div>
+                        <div class="mesh-data">
+                            <span id="node1-t" class="color-cyan count-up">0.0</span><span style="font-size:1rem; color:var(--text-3); margin-right:16px;">°C</span>
+                            <span id="node1-h" class="color-cyan count-up" style="opacity:0.6">0.0</span><span style="font-size:1rem; color:var(--text-3)">%</span>
+                        </div>
+                        <div class="mesh-title" style="margin-top:24px; margin-bottom:0;"><span>T_LAST_PULSE</span><span id="node1-ts" style="color:var(--text-1)">--:--:--</span></div>
+                    </div>
+                    <div class="mesh-node">
+                        <div class="mesh-title"><span>NODE_002 [ESP32_WIFI]</span><div class="ping-circle" style="background:var(--gold); box-shadow:0 0 10px var(--gold)"></div></div>
+                        <div class="mesh-data">
+                            <span id="node2-t" class="color-gold count-up">0.0</span><span style="font-size:1rem; color:var(--text-3); margin-right:16px;">°C</span>
+                            <span id="node2-h" class="color-gold count-up" style="opacity:0.6">0.0</span><span style="font-size:1rem; color:var(--text-3)">%</span>
+                        </div>
+                        <div class="mesh-title" style="margin-top:24px; margin-bottom:0;"><span>T_LAST_PULSE</span><span id="node2-ts" style="color:var(--text-1)">--:--:--</span></div>
+                    </div>
+                    <div class="mesh-node">
+                        <div class="mesh-title"><span>MASS_CTRL [HX711]</span><div class="ping-circle" style="background:var(--rose); box-shadow:0 0 10px var(--rose)"></div></div>
+                        <div class="mesh-data">
+                            <span id="node3-w" class="color-rose count-up">0.000</span><span style="font-size:1rem; color:var(--text-3);">KG</span>
+                        </div>
+                        <div class="mesh-title" style="margin-top:24px; margin-bottom:0;"><span>T_LAST_PULSE</span><span id="node3-ts" style="color:var(--text-1)">--:--:--</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-panel">
+                <div class="glass-panel-header">Recent Actuation Vectors</div>
+                <div class="data-table-wrapper">
+                    <table>
+                        <thead><tr><th>Timencode (UTC)</th><th>Asset Hash</th><th>Computed WPS</th><th>Subroutine Engaged</th></tr></thead>
+                        <tbody id="tbl-ov-log"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-inventory" class="view">
+            <div class="glass-panel">
+                <div class="glass-panel-header">Asset Predictive Degradation Matrix</div>
+                <div class="data-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hash_ID</th>
+                                <th>Designation</th>
+                                <th>Temporal Drift</th>
+                                <th>T-Minus Life</th>
+                                <th style="width: 250px;">Probability Tensor (WPS)</th>
+                                <th>Output Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl-inv"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-sensors" class="view">
+            <div class="glass-panel">
+                <div class="glass-panel-header">Thermodynamic Array (72H Window)</div>
+                <div class="chart-wrapper"><canvas id="chart-temp"></canvas></div>
+            </div>
+            <div class="glass-panel">
+                <div class="glass-panel-header">Shelf Mass Velocity & Stagnation Tracker</div>
+                <div class="chart-wrapper"><canvas id="chart-weight"></canvas></div>
+            </div>
+        </section>
+
+        <section id="view-logs" class="view">
+            <div class="glass-panel">
+                <div class="glass-panel-header" style="justify-content: space-between;">
+                    <span>Immutable Execution Ledger</span>
+                    <button class="magic-btn" onclick="exportCSV()" style="padding: 10px 24px;">Extract Data</button>
+                </div>
+                <div class="data-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Timencode (UTC)</th>
+                                <th>Designation</th>
+                                <th>Precision WPS</th>
+                                <th>Executed Output</th>
+                                <th>Diagnostic Memory</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl-full-log"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        /* =========================================================
+           BACKGROUND NEURAL CANVAS ANIMATION
+           ========================================================= */
+        const canvas = document.getElementById('bg-canvas');
+        const ctxCa = canvas.getContext('2d');
+        let width, height, particles;
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            for(let i=0; i<60; i++) {
+                particles.push({
+                    x: Math.random() * width, y: Math.random() * height,
+                    vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5,
+                    radius: Math.random() * 1.5 + 0.5
+                });
+            }
+        }
+        function drawCanvas() {
+            ctxCa.clearRect(0,0,width,height);
+            ctxCa.fillStyle = "rgba(255,255,255,0.4)";
+            
+            for(let i=0; i<particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx; p.y += p.vy;
+                if(p.x < 0 || p.x > width) p.vx *= -1;
+                if(p.y < 0 || p.y > height) p.vy *= -1;
+                
+                ctxCa.beginPath(); ctxCa.arc(p.x, p.y, p.radius, 0, Math.PI*2); ctxCa.fill();
+                
+                for(let j=i+1; j<particles.length; j++) {
+                    let p2 = particles[j];
+                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if(dist < 150) {
+                        ctxCa.beginPath();
+                        ctxCa.strokeStyle = `rgba(0, 229, 255, ${0.1 * (1 - dist/150)})`;
+                        ctxCa.lineWidth = 0.5;
+                        ctxCa.moveTo(p.x, p.y); ctxCa.lineTo(p2.x, p2.y);
+                        ctxCa.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(drawCanvas);
+        }
+        window.addEventListener('resize', initCanvas);
+        initCanvas(); drawCanvas();
+
+        /* =========================================================
+           3D TILT EFFECT FOR HUD CARDS
+           ========================================================= */
+        document.querySelectorAll('.tilt-fx').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                const centerX = rect.width / 2; const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -10; // Max rotation degrees
+                const rotateY = ((x - centerX) / centerX) * 10;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                
+                // Dynamic glare effect based on mouse pos
+                card.style.background = `linear-gradient(145deg, rgba(20,22,30,0.6), rgba(10,11,16,0.9)), radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.05) 0%, transparent 80%)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                card.style.background = `linear-gradient(145deg, rgba(20,22,30,0.4), rgba(10,11,16,0.8))`;
+            });
+        });
+
+        /* =========================================================
+           ADVANCED UI LOGIC & ANIMATIONS
+           ========================================================= */
+        function switchView(id) {
+            document.querySelectorAll('.view').forEach(e => e.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
+            document.getElementById('view-' + id).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            const titles = { 'overview':'Global Topology', 'inventory':'Asset Neural Matrix', 'sensors':'Hardware Telemetry', 'logs':'Immutable Ledger' };
+            scrambleText(document.getElementById('page-title'), titles[id]);
+            
+            if(id === 'sensors') renderChartsFlow();
+        }
+
+        // Cyber Scramble Reveal
+        const chars = '!<>-_\\/[]{}—=+*^?#_';
+        function scrambleText(element, finalStr) {
+            let iteration = 0; clearInterval(element.dataset.interval);
+            element.dataset.interval = setInterval(() => {
+                element.innerText = finalStr.split('').map((letter, index) => {
+                    if(index < iteration) return finalStr[index];
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
+                if(iteration >= finalStr.length) clearInterval(element.dataset.interval);
+                iteration += 1 / 3;
+            }, 30);
+        }
+
+        // Smooth Counter Animation
+        function animateValue(id, end, decimals=0) {
+            const obj = document.getElementById(id); if(!obj) return;
+            const start = parseFloat(obj.innerText) || 0;
+            if(start === end) return;
+            const duration = 1500; let startTimestamp = null;
+            const step = (ts) => {
+                if (!startTimestamp) startTimestamp = ts;
+                const prog = Math.min((ts - startTimestamp) / duration, 1);
+                const ease = 1 - Math.pow(1 - prog, 4); // easeOutQuart
+                const current = start + ease * (end - start);
+                obj.innerText = current.toFixed(decimals);
+                if (prog < 1) window.requestAnimationFrame(step);
+                else obj.innerText = end.toFixed(decimals);
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        let _s = { p: [], s: {}, a: [], h: {} };
+
+        async function pulseEngine() {
+            try {
+                const [p, s, a, h] = await Promise.all([
+                    fetch('/products').then(r=>r.json()), fetch('/sensors').then(r=>r.json()),
+                    fetch('/actions').then(r=>r.json()), fetch('/history').then(r=>r.json())
+                ]);
+                _s.p = p.products; _s.s = s; _s.a = a.actions; _s.h = h;
+                
+                document.getElementById('sync-hash').innerText = "0x" + Math.random().toString(16).substr(2, 6).toUpperCase();
+                injectDOM();
+                if(document.getElementById('view-sensors').classList.contains('active')) renderChartsFlow();
+            } catch(e) { console.error("Neural Disconnect", e); scrambleText(document.getElementById('page-title'), "CONNECTION LOST"); }
+        }
+
+        function wpsColor(v) { return v >= 80 ? 'var(--rose)' : v >= 40 ? 'var(--gold)' : 'var(--cyan)'; }
+        function wpsPill(s) { return s==='Safe' ? 'safe' : (s==='Markdown'||s==='Bundle') ? 'warn' : 'crit'; }
+
+        function injectDOM() {
+            let cw=0, cc=0, suT=0, cT=0;
+            _s.p.forEach(x => { if(x.final_wps>=80) cc++; else if(x.final_wps>=40) cw++; });
+            
+            animateValue('kpi-total', _s.p.length, 0);
+            animateValue('kpi-risk', cw, 0);
+            animateValue('kpi-crit', cc, 0);
+
+            if(_s.s.dht_local?.temp) {suT+=_s.s.dht_local.temp; cT++;}
+            if(_s.s.dht_node?.temp) {suT+=_s.s.dht_node.temp; cT++;}
+            animateValue('kpi-temp', cT>0 ? (suT/cT) : 0, 1);
+
+            const mSet = (id, obj, t) => {
+                if(obj) {
+                    if(t) { animateValue(id+'-t', obj.temp, 1); animateValue(id+'-h', obj.humidity, 1); }
+                    else animateValue(id+'-w', obj.weight_kg, 3);
+                    document.getElementById(id+'-ts').innerText = obj.timestamp.split('T')[1].substring(0,8);
+                }
+            };
+            mSet('node1', _s.s.dht_local, true);
+            mSet('node2', _s.s.dht_node, true);
+            mSet('node3', _s.s.load_cell, false);
+
+            document.getElementById('tbl-inv').innerHTML = _s.p.map(p => {
+                let c = wpsColor(p.final_wps);
+                return `<tr>
+                    <td><span class="sku-code">${p.sku}</span></td>
+                    <td style="font-weight:600; font-size:1.1rem; letter-spacing:0.05em">${p.name.toUpperCase()}</td>
+                    <td class="mono-val" style="color:var(--text-3)">${p.time_in_store_days} D</td>
+                    <td class="mono-val" style="color:${p.days_to_expiry<14?'var(--rose)':'var(--text-1)'}">${p.days_to_expiry} D</td>
+                    <td>
+                        <div style="font-family:'Space Grotesk'; font-size:1.4rem; font-weight:700; color:${c}; margin-bottom: 8px;">${(p.final_wps||0).toFixed(2)}</div>
+                        <div class="prog-container"><div class="prog-bar" style="width:${p.final_wps}%; background:${c}; box-shadow:0 0 10px ${c}"></div></div>
+                    </td>
+                    <td><span class="status-pill ${wpsPill(p.status)}">${p.status || 'SCAN'}</span></td>
+                </tr>`;
+            }).join('');
+
+            document.getElementById('tbl-ov-log').innerHTML = _s.a.slice(0,5).map(a => `<tr>
+                <td class="mono-val" style="color:var(--text-3)">${a.timestamp.substring(11,19)}</td>
+                <td style="font-weight:600;">${a.name.toUpperCase()}</td>
+                <td style="font-family:'Space Grotesk'; font-size:1.2rem; font-weight:700; color:${wpsColor(a.wps)}; text-shadow:0 0 10px ${wpsColor(a.wps)}55">${a.wps.toFixed(2)}</td>
+                <td><span class="status-pill ${wpsPill(a.wps>=80?'Critical':a.wps>=40?'Markdown':'Safe')}">${a.action_type.replace('_',' ')}</span></td>
+            </tr>`).join('');
+
+            document.getElementById('tbl-full-log').innerHTML = _s.a.map(a => `<tr>
+                <td class="mono-val" style="color:var(--text-3)">${a.timestamp.replace('T', ' ').substring(0,19)}</td>
+                <td style="font-weight:600; font-size:1.1rem">${a.name.toUpperCase()}</td>
+                <td style="font-family:'Space Grotesk'; font-size:1.4rem; font-weight:700; color:${wpsColor(a.wps)}; text-shadow:0 0 10px ${wpsColor(a.wps)}55">${a.wps.toFixed(3)}</td>
+                <td><span class="status-pill ${wpsPill(a.wps>=80?'Critical':a.wps>=40?'Markdown':'Safe')}">${a.action_type.replace('_',' ')}</span></td>
+                <td style="color:var(--text-2); font-size:0.85rem;">${a.notes}</td>
+            </tr>`).join('');
+        }
+
+        async function forceRecalculate() { await fetch('/recalculate', {method:'POST'}); pulseEngine(); }
+
+        let chT=null, chW=null;
+        function renderChartsFlow() {
+            if(!_s.h.temperature) return;
+            Chart.defaults.color = '#525660'; Chart.defaults.font.family = "'JetBrains Mono', monospace";
+            const fontOpts = { size: 11, color: '#8a8f98' }; const gridOpts = { color: 'rgba(255,255,255,0.02)', drawBorder: false };
+
+            const ctxT = document.getElementById('chart-temp').getContext('2d');
+            const bgGrad1 = ctxT.createLinearGradient(0,0,0,400); bgGrad1.addColorStop(0, 'rgba(0, 229, 255, 0.4)'); bgGrad1.addColorStop(1, 'rgba(0, 229, 255, 0)');
+            const bgGrad2 = ctxT.createLinearGradient(0,0,0,400); bgGrad2.addColorStop(0, 'rgba(255, 184, 0, 0.2)'); bgGrad2.addColorStop(1, 'rgba(255, 184, 0, 0)');
+
+            if(chT) chT.destroy();
+            chT = new Chart(ctxT, {
+                type: 'line',
+                data: {
+                    datasets: [
+                        { label: ' NODE_001', data: _s.h.temperature.local, borderColor: '#00e5ff', backgroundColor: bgGrad1, fill: true, tension: 0.5, borderWidth: 2, pointRadius: 0, hoverBorderColor:'#fff' },
+                        { label: ' NODE_002', data: _s.h.temperature.node, borderColor: '#ffb800', backgroundColor: bgGrad2, fill: true, tension: 0.5, borderWidth: 2, borderDash: [6,6], pointRadius: 0 }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+                    plugins: { legend: { labels: { color: '#fff', usePointStyle: true, boxWidth: 6 }, padding: 30 }, tooltip: { backgroundColor: 'rgba(10, 11, 16, 0.95)', titleFont: {family: 'Space Grotesk', size: 14}, padding: 16, borderColor: 'rgba(0,229,255,0.2)', borderWidth: 1 } },
+                    scales: { x: { type: 'category', labels: _s.h.temperature.local.map(d=>d.x.split('T')[1].substring(0,5)), grid: gridOpts, ticks: {font: fontOpts, maxTicksLimit: 10} }, y: { grid: gridOpts, ticks: {font: fontOpts, padding: 15} } }
+                }
+            });
+
+            const ctxW = document.getElementById('chart-weight').getContext('2d');
+            const bgGradW = ctxW.createLinearGradient(0,0,0,400); bgGradW.addColorStop(0, 'rgba(94, 106, 210, 0.5)'); bgGradW.addColorStop(1, 'rgba(94, 106, 210, 0)');
+
+            if(chW) chW.destroy();
+            chW = new Chart(ctxW, {
+                type: 'line',
+                data: { datasets: [{ label: ' SYS_MASS', data: _s.h.weight, borderColor: '#5e6ad2', backgroundColor: bgGradW, fill: true, tension: 0, stepLine: true, borderWidth: 3, pointBackgroundColor: '#00e5ff', pointBorderColor: '#5e6ad2', pointBorderWidth: 2, pointRadius: 5, pointHoverRadius: 10 }] },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+                    plugins: { legend: { labels: { color: '#fff', usePointStyle: true }, padding:30 } },
+                    scales: { x: { type: 'category', labels: _s.h.weight.map(d=>d.x.split('T')[1].substring(0,5)), grid: gridOpts, ticks: {font: fontOpts, maxTicksLimit: 10} }, y: { min: 4.0, grid: gridOpts, ticks: {font: fontOpts, padding: 15} } }
+                }
+            });
+        }
+
+        scrambleText(document.getElementById('page-title'), 'Global Topology');
+        pulseEngine(); setInterval(pulseEngine, 20000); // Poll faster for the animations to shine
+    </script>
+</body>
+</html>
